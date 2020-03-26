@@ -1,10 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 import logoImg from '../../assets/logo.svg';
+import api from '../../services/api';
 import { Button, Input, StyledLink } from '../../styles';
 import { Container, Content, Form, Group, Section, Text, Title } from './styles';
 
 const Register: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [city, setCity] = useState('');
+  const [uf, setUf] = useState('');
+
+  const history = useHistory();
+
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    try {
+      type ResponseType = {
+        id: string;
+      };
+  
+      const response = await api.post<ResponseType>('/ongs', {
+        name,
+        email,
+        whatsapp,
+        city,
+        uf,
+      });
+  
+      alert(`Seu ID de acesso: ${response.data.id}`);
+
+      history.push('/');
+    } catch (err) {
+      alert('Erro no cadastro, tente novamente.');
+    }
+  };
+
   return (
     <Container>
       <Content>
@@ -23,19 +57,41 @@ const Register: React.FC = () => {
 
         </Section>
         
-        <Form>
+        <Form onSubmit={handleSubmit}>
 
-          <Input placeholder="Nome da ONG" />
-          <Input type="email" placeholder="E-mail" />
-          <Input placeholder="WhatsApp" />
+          <Input
+            placeholder="Nome da ONG"
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+          />
+
+          <Input
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={({ target }) => setEmail(target.value)}
+          />
+
+          <Input
+            placeholder="WhatsApp"
+            value={whatsapp}
+            onChange={({ target }) => setWhatsapp(target.value)}
+          />
           
           <Group>
-            <Input placeholder="Cidade" />
+            <Input
+              placeholder="Cidade"
+              value={city}
+              onChange={({ target }) => setCity(target.value)}
+            />
+            
             <Input
               placeholder="UF"
               style={{
                 width: 80
               }}
+              value={uf}
+              onChange={({ target }) => setUf(target.value)}
             />
           </Group>
 

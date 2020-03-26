@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
-
   * {
     margin: 0;
     padding: 0;

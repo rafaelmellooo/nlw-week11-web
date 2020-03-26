@@ -59,9 +59,13 @@ export const Logout = styled.button`
 `;
 
 export const Title = styled.h1`
-
+  margin-top: 80px;
+  margin-bottom: 24px;
 `;
 
 export const List = styled.ul`
-
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 24px;
+  list-style: none;
 `;
